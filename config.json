@@ -1,0 +1,35 @@
+{
+    "Application":{
+        "port":"9900",
+        "from":"",
+        "to":""
+    },
+    "Redis":{
+        "address":"",
+        "password":"",
+        "port":"",
+        "prefix":""
+    },
+    "DB":"",
+    "Mysql":{
+        "address":"",
+        "user":"",
+        "password":"",
+        "port":"",
+        "db":""
+    },
+    "Sqlite":{
+        "path":"",
+        "filename":"",
+        "sizelimit":""
+    },
+    "Model":{
+        "model_path":"iryneko571/mt5-translation-ja_zh-game-small",
+        "repetition_penalty":1.4,
+        "batch_size":64,
+        "max_length":256
+    },
+    "Translation":{
+        "lang":"<-ja2zh->"
+    }
+}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload and Send JSON File</title>
+</head>
+<body>
+
+<h2>Upload a JSON File</h2>
+
+<input type="file" id="fileInput" accept=".json">
+<p id="statusMessage"></p>
+<p id="fileid" style="display:none"></p>
+<a id="downloadAnchorElem" style="display:none"></a>
+
+<script>
+document.getElementById('fileInput').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    
+    if (file && file.type === "application/json") {
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+            const content = e.target.result;
+            sendJsonToServer(content);
+        };
+        
+        reader.readAsText(file);
+    } else {
+        alert("Please upload a valid JSON file.");
+    }
+});
+
+function sendJsonToServer(jsonContent) {
+    fetch('/translate/json', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: jsonContent
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('statusMessage').textContent = "File successfully sent!";
+        //console.log("Response from server:", data);
+        //document.getElementById('fileid').textContent = data;
+        var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data,null,2));
+        var dlAnchorElem = document.getElementById('downloadAnchorElem');
+        dlAnchorElem.setAttribute("href",     dataStr     );
+        dlAnchorElem.setAttribute("download", "scene.json");
+        dlAnchorElem.click();
+    })
+    .catch(error => {
+        document.getElementById('statusMessage').textContent = "Error sending file.";
+        console.error("Error:", error);
+    });
+}
+</script>
+
+</body>
+</html>
