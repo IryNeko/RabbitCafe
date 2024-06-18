@@ -1,0 +1,6 @@
+flask
+redis
+transformers
+re
+tqdm
+datasets
